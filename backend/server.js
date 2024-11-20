@@ -1,7 +1,8 @@
 import express from "express";
 import cors from "cors";
-import { main } from "./chatbot";
+
 import { hostname } from "os";
+import { main } from "./chatbot.js";
 const app = express();
 const PORT = 3000;
 
@@ -9,14 +10,15 @@ app.use(cors());
 app.use(express.json());
 
 app.use((req, res, next)=> {
-    console.log(`Request from ${req.url} \n Headers: ${req.headers}`);
+    console.log(`Request from ${req.url} \n`);
     next();
-})
+});
 
-app.post('/conversation', (req, res) => {
+app.post('/conversation', async (req, res) => {
     const userInput = req.body;
-    const response = main(userInput);
-    return res.json({ response: response});
+    // console.log(userInput.body)
+    const response = await main({ prompt: userInput.body})
+    return res.json({ output: response});
 });
 
 app.listen(PORT, hostname, (req, res) => {
