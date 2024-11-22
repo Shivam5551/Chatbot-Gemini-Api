@@ -13,6 +13,10 @@ app.use((req, res, next)=> {
     next();
 });
 
+app.get("/", (req, res) => {
+    return res.json({ message: "Server is running"})
+})
+
 app.post('/conversation', async (req, res) => {
     const userInput = req.body;
     console.log(userInput)
