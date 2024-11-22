@@ -78,7 +78,7 @@ const App = () => {
 
 <div className="row-span-10 p-12 overflow-x-hidden overflow-y-auto h-full w-full">
   {conversations.length === 0 ? (
-    <div className="flex justify-center whitespace-pre items-center h-full text-7xl font-extrabold"><h1 className="text-yellow-500">How </h1><h1 className="text-purple-400">can I help you?</h1></div>
+    <div className="flex justify-center whitespace-pre items-center h-full text-2xl sm:text-7xl font-extrabold"><h1 className="text-yellow-500">How </h1><h1 className="text-purple-400">can I help you?</h1></div>
   ) : (
     conversations.map(({ UserInput, ServerResponse }, index) => (
       <div key={index} className="mb-4">
