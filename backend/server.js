@@ -31,6 +31,4 @@ app.post('/conversation', async (req, res) => {
     
 });
 
-app.listen(PORT, hostname, (req, res) => {
-    console.log(`Server running on ${hostname} at Port: ${PORT}`);
-})
+export default app;
