@@ -1,6 +1,5 @@
 import express from "express";
 import cors from "cors";
-import { hostname } from "os";
 import { main } from "./chatbot.js";
 const app = express();
 const PORT = 3000;
