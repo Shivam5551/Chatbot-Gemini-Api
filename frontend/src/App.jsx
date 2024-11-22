@@ -23,7 +23,7 @@ const App = () => {
 
     setLoading(true);
     try {
-      const response = await axios.post("http://localhost:3000/conversation", { 
+      const response = await axios.post("https://chatbot-gemini-api-jpwo.vercel.app/conversation", { 
         prompt: input,
       });
       const printableOutput = formatText(response.data.output || "No response available.");
