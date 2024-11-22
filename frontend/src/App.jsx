@@ -76,20 +76,25 @@ const App = () => {
   return (
     <div className="w-screen h-screen overflow-y-auto overflow-x-hidden bg-slate-900/95 grid grid-rows-12">
 
-      <div className="row-span-10 p-12 overflow-x-hidden overflow-y-auto h-full w-full">
-        {conversations.map(({ UserInput, ServerResponse }, index) => (
-          <div key={index} className="mb-4">
-            <div className=" flex justify-end w-full overflow-x-clip h-fit mb-2 text-white">
-              <div className="rounded-2xl break-all h-fit bg-gray-500 p-2">
-                <strong className="whitespace-pre">User: </strong> {UserInput}
-              </div>
-            </div>
-              <div className="bg-gray-700 whitespace-pre text-wrap overflow-x-auto p-2 h-fit rounded-3xl text-white mt-2">
-                <strong>Response:</strong> {parse(ServerResponse)}
-              </div>
+<div className="row-span-10 p-12 overflow-x-hidden overflow-y-auto h-full w-full">
+  {conversations.length === 0 ? (
+    <div className="flex justify-center whitespace-pre items-center h-full text-7xl font-extrabold"><h1 className="text-yellow-500">How </h1><h1 className="text-purple-400">can I help you?</h1></div>
+  ) : (
+    conversations.map(({ UserInput, ServerResponse }, index) => (
+      <div key={index} className="mb-4">
+        <div className="flex justify-end w-full overflow-x-clip h-fit mb-2 text-white">
+          <div className="rounded-2xl w-fit max-w-[50%]  break-all h-fit bg-gray-500 p-2">
+            <strong className="whitespace-pre">User: </strong> {UserInput}
           </div>
-        ))}
+        </div>
+        <div className="bg-gray-700 whitespace-pre text-wrap overflow-x-auto p-2 h-fit rounded-3xl text-white mt-2">
+          <strong>Response:</strong> {parse(ServerResponse)}
+        </div>
       </div>
+    ))
+  )}
+</div>
+
 
       <div className="flex items-end relative row-span-2 justify-center mb-4">
         <div className="flex items-center w-full md:w-3/4 h-fit rounded-3xl m-1 sm:m-4 mb-1 sm:mb-3 bg-zinc-700">
