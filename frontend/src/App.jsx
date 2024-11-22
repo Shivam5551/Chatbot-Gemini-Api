@@ -23,7 +23,9 @@ const App = () => {
 
     setLoading(true);
     try {
-      const response = await axios.post("http://localhost:3000/conversation", { body: input });
+      const response = await axios.post("http://localhost:3000/conversation", { 
+        prompt: input,
+      });
       const printableOutput = formatText(response.data.output || "No response available.");
       conversations.push({
         UserInput: input,

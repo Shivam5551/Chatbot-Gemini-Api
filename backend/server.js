@@ -1,6 +1,5 @@
 import express from "express";
 import cors from "cors";
-
 import { hostname } from "os";
 import { main } from "./chatbot.js";
 const app = express();
@@ -16,9 +15,16 @@ app.use((req, res, next)=> {
 
 app.post('/conversation', async (req, res) => {
     const userInput = req.body;
-    // console.log(userInput.body)
-    const response = await main({ prompt: userInput.body})
-    return res.json({ output: response});
+    console.log(userInput)
+    console.log(userInput.prompt);
+    try {
+        const response = await main({prompt: userInput.prompt});
+        return res.json({ output: response});
+    } catch (error) {
+        console.log("error", error);
+        return res.json({output: "Internal Error 500"})
+    }
+    
 });
 
 app.listen(PORT, hostname, (req, res) => {

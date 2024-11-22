@@ -1,0 +1,27 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "Server for chatbot",
+  "main": "chatbot.js",
+  "type": "module",
+  "scripts": {
+    "test": "run dev",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Shivam5551/Chatbot-Gemini-Api.git"
+  },
+  "author": "Shivam",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Shivam5551/Chatbot-Gemini-Api/issues"
+  },
+  "homepage": "https://github.com/Shivam5551/Chatbot-Gemini-Api#readme",
+  "dependencies": {
+    "@google/generative-ai": "^0.21.0",
+    "cors": "^2.8.5",
+    "express": "^4.21.1",
+    "nodemon": "^3.1.7"
+  }
+}
