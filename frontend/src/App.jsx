@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef, useCallback } from "react";
 import axios from "axios";
 import parse from "html-react-parser"; 
+import { marked } from 'marked';
 
 // Storing data temporarily (not in a database for now)
 let conversations = [];
@@ -11,11 +12,7 @@ const App = () => {
   const [loading, setLoading] = useState(false);
 
   const formatText = (text) => {
-    return text
-      .replace(/(\*\*\*\*)(.*?)\1/g, '<h3>$2</h3>')
-      .replace(/(\*\*\*)(.*?)\1/g, '<h2>$2</h2>')
-      .replace(/(\*\*)(.*?)\1/g, '<h1>$2</h1>')
-      .replace(/(\*)(.*?)\1/g, '<p>$2</p>');
+    return marked(text);
   };
 
   const getInput = useCallback(async () => {
@@ -83,11 +80,11 @@ const App = () => {
     conversations.map(({ UserInput, ServerResponse }, index) => (
       <div key={index} className="mb-4">
         <div className="flex justify-end w-full overflow-x-clip h-fit mb-2 text-white">
-          <div className="rounded-2xl w-fit max-w-[50%]  break-all h-fit bg-gray-500 p-2">
+          <div className="rounded-2xl w-fit max-w-[50%] break-all h-fit bg-gray-500 p-2">
             <strong className="whitespace-pre">User: </strong> {UserInput}
           </div>
         </div>
-        <div className="bg-gray-700 whitespace-pre text-wrap overflow-x-auto p-2 h-fit rounded-3xl text-white mt-2">
+        <div className="bg-gray-700 whitespace-pre p-7 text-wrap overflow-x-auto h-fit rounded-3xl text-white mt-2">
           <strong>Response:</strong> {parse(ServerResponse)}
         </div>
       </div>
