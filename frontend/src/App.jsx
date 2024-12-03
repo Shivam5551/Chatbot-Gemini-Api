@@ -16,11 +16,10 @@ const App = () => {
   };
 
   const noInput = () => {
-    return (
-      <div>Search Anything</div>
-    )
-  }
-  
+    return <div className="col-span-11 break-all text-sm sm:text-lg whitespace-pre absolute  text-wrap w-full overflow-x-hidden overflow-y-auto h-fit max-h-24 line-clamp-2 items-center rounded-2xl m-0 p-2 md:p-4 flex text-white caret-white"
+    >Search Anything</div>;
+  };
+
   const getInput = useCallback(async () => {
     if (input.trim() === "") return;
 
@@ -46,23 +45,21 @@ const App = () => {
     }
   }, [input]);
 
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (e.key === 'Enter' && input.trim() !== '') {
-        e.preventDefault();
-        getInput();
-      } else if (e.key.length === 1 || e.key === 'Tab') {
-        const key = e.key === 'Tab' ? '    ' : e.key;
-        setInput((prevInput) => prevInput + key);
-      } else if (e.key === 'Backspace' && input.length > 0) {
-        setInput((prevInput) => prevInput.slice(0, -1));
-      }
-      e.preventDefault();
-    };
+  const handleInputChange = (e) => {
+    setInput(e.target.innerText); 
+  };
 
-    document.addEventListener("keydown", handleKeyDown);
-    return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [input, getInput]);
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault(); // Prevent default behavior of adding a newline
+      if (input.trim() !== '') {
+        getInput();
+      }
+    } else if (e.key === 'Tab') {
+      e.preventDefault(); // Handle Tab key for indentation
+      setInput((prevInput) => prevInput + '    ');
+    }
+  };
 
   useEffect(() => {
     if (inputRef.current) {
@@ -78,38 +75,40 @@ const App = () => {
 
   return (
     <div className="w-screen h-screen overflow-y-auto overflow-x-hidden bg-slate-900/95 grid grid-rows-12">
-
-<div className="row-span-10 p-12 overflow-x-hidden overflow-y-auto h-full w-full">
-  {conversations.length === 0 ? (
-    <div className="flex justify-center whitespace-pre items-center h-full text-2xl sm:text-7xl font-extrabold"><h1 className="text-yellow-500">How </h1><h1 className="text-purple-400">can I help you?</h1></div>
-  ) : (
-    conversations.map(({ UserInput, ServerResponse }, index) => (
-      <div key={index} className="mb-4">
-        <div className="flex justify-end w-full overflow-x-clip h-fit mb-2 text-white">
-          <div className="rounded-2xl w-fit max-w-[50%] break-all h-fit bg-gray-500 p-2">
-            <strong className="whitespace-pre">User: </strong> {UserInput}
+      <div className="row-span-10 p-2 sm:p-12 overflow-x-hidden overflow-y-auto h-full w-full">
+        {conversations.length === 0 ? (
+          <div className="flex justify-center whitespace-pre items-center h-full text-2xl sm:text-7xl font-extrabold">
+            <h1 className="text-yellow-500">How </h1><h1 className="text-purple-400">can I help you?</h1>
           </div>
-        </div>
-        <div className="bg-gray-700 whitespace-pre p-7 text-wrap overflow-x-auto h-fit rounded-3xl text-white mt-2">
-          <strong>Response:</strong> {parse(ServerResponse)}
-        </div>
+        ) : (
+          conversations.map(({ UserInput, ServerResponse }, index) => (
+            <div key={index} className="mb-4">
+              <div className="flex justify-end w-full overflow-x-clip h-fit mb-2 text-white">
+                <div className="rounded-2xl w-fit max-w-[70%] break-all h-fit bg-gray-500 p-2">
+                  <strong className="whitespace-pre">User: </strong> {UserInput}
+                </div>
+              </div>
+              <div className="bg-gray-700 whitespace-pre p-3 sm:p-7 text-wrap overflow-x-auto h-fit rounded-3xl text-white mt-2">
+                <strong>Response:</strong> {parse(ServerResponse)}
+              </div>
+            </div>
+          ))
+        )}
       </div>
-    ))
-  )}
-</div>
-
 
       <div className="flex items-end relative row-span-2 justify-center mb-4">
         <div className="flex items-center w-full md:w-3/4 h-fit rounded-3xl m-1 sm:m-4 mb-1 sm:mb-3 bg-zinc-700">
+          {input === '' ? noInput() : ''}
           <div
             ref={inputRef}
             className="col-span-11 break-all text-sm sm:text-lg whitespace-pre relative text-wrap w-full overflow-x-hidden overflow-y-auto h-fit max-h-24 line-clamp-2 items-center rounded-2xl m-0 p-2 md:p-4 flex text-white caret-white"
             contentEditable
             suppressContentEditableWarning={true}
             role="textbox"
+            onInput={handleInputChange} // Handle text input
+            onKeyDown={handleKeyDown} // Handle special keys
           >
-
-            {input === '' ? noInput(): input}
+            {input}
           </div>
           <div className="flex justify-end pr-1 pl-1 sm:pl-2 sm:pr-2">
             <button
