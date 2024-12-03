@@ -15,6 +15,12 @@ const App = () => {
     return marked(text);
   };
 
+  const noInput = () => {
+    return (
+      <div>Search Anything</div>
+    )
+  }
+  
   const getInput = useCallback(async () => {
     if (input.trim() === "") return;
 
@@ -102,7 +108,8 @@ const App = () => {
             suppressContentEditableWarning={true}
             role="textbox"
           >
-            {input === '' ? "Search Anything" : input}
+
+            {input === '' ? noInput(): input}
           </div>
           <div className="flex justify-end pr-1 pl-1 sm:pl-2 sm:pr-2">
             <button
