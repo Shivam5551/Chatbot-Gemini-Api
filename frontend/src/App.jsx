@@ -22,7 +22,8 @@ const App = () => {
 
   useEffect(() => {
     scrollToBottom();
-  }, [conversations]);
+  }, [conversations, loading]); 
+  
 
   const getInput = useCallback(async () => {
     if (input.trim() === "") return;
